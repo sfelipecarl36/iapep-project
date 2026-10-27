@@ -1,0 +1,7 @@
+{
+  "name": "IAPEP Associados",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
