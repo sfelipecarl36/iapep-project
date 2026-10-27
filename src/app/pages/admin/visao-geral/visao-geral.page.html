@@ -1,0 +1,130 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Painel Administrativo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main class="dashboard">
+
+    <!-- Cabeçalho -->
+    <section class="page-heading">
+      <div>
+        <span class="eyebrow">PAINEL ADMINISTRATIVO</span>
+        <h1>Visão geral</h1>
+        <p>
+          Acompanhe os indicadores e as atividades
+          do Instituto de Avaliações e Perícias
+          de Engenharia do Pará.
+        </p>
+      </div>
+
+      <span class="demo-badge">
+        Ambiente demonstrativo
+      </span>
+    </section>
+
+    <section class="indicators">
+      @for (item of indicadores; track item.titulo) {
+        <article class="indicator-card">
+
+          <div class="indicator-top">
+            <div class="indicator-icon">
+              <ion-icon [name]="item.icone"></ion-icon>
+            </div>
+          </div>
+
+          <div class="indicator-value">
+            {{ item.valor ?? '—' }}
+          </div>
+
+          <h2>{{ item.titulo }}</h2>
+
+          <span class="indicator-caption">
+            Aguardando integração
+          </span>
+
+        </article>
+      }
+    </section>
+
+    <section class="dashboard-grid">
+
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Atividades recentes</h2>
+            <p>Últimas movimentações do instituto</p>
+          </div>
+          <ion-icon name="time-outline"></ion-icon>
+        </div>
+
+        <div class="empty-state">
+          <ion-icon name="time-outline"></ion-icon>
+          <h3>Nenhuma atividade registrada</h3>
+          <p>
+            As movimentações aparecerão aqui
+            após a integração com o banco de dados.
+          </p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Propostas de admissão</h2>
+            <p>Solicitações aguardando análise</p>
+          </div>
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+
+        <div class="empty-state">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+          <h3>Dados ainda não disponíveis</h3>
+          <p>
+            As propostas de novos associados
+            aparecerão nesta seção.
+          </p>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="quick-section">
+      <div class="section-heading">
+        <h2>Acesso rápido</h2>
+        <p>Acesse as principais áreas administrativas</p>
+      </div>
+
+      <div class="quick-grid">
+        @for (atalho of atalhos; track atalho.rota) {
+          <a [routerLink]="atalho.rota" class="quick-card">
+            <div class="quick-icon">
+              <ion-icon [name]="atalho.icone"></ion-icon>
+            </div>
+
+            <div class="quick-text">
+              <strong>{{ atalho.titulo }}</strong>
+              <span>{{ atalho.descricao }}</span>
+            </div>
+
+            <ion-icon
+              name="arrow-forward-outline"
+              class="quick-arrow">
+            </ion-icon>
+          </a>
+        }
+      </div>
+    </section>
+
+    <footer class="dashboard-footer">
+      IAPEP — Sistema Interativo
+    </footer>
+
+  </main>
+</ion-content>

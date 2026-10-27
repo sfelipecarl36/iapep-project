@@ -1,0 +1,82 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Gestão de Associados</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main class="associados-page">
+
+    <section class="page-heading">
+      <span class="eyebrow">ADMINISTRAÇÃO</span>
+      <h1>Associados</h1>
+      <p>Gerencie os membros e propostas de admissão do IAPEP.</p>
+    </section>
+
+    <section class="stats-grid">
+      @for (item of indicadores; track item.titulo) {
+        <article class="stat-card">
+          <div class="stat-icon">
+            <ion-icon [name]="item.icone"></ion-icon>
+          </div>
+          <strong>—</strong>
+          <span>{{ item.titulo }}</span>
+          <small>Aguardando integração</small>
+        </article>
+      }
+    </section>
+
+    <section class="members-panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Lista de associados</h2>
+          <p>Consulte os cadastros e situações associativas.</p>
+        </div>
+        <span class="demo-badge">Sem integração</span>
+      </div>
+
+      <div class="filters">
+        <ion-searchbar
+          [(ngModel)]="pesquisa"
+          placeholder="Pesquisar nome, CPF ou matrícula"
+          [debounce]="300">
+        </ion-searchbar>
+
+        <ion-select
+          [(ngModel)]="filtroStatus"
+          interface="popover"
+          aria-label="Filtrar por situação">
+          <ion-select-option value="todos">
+            Todas as situações
+          </ion-select-option>
+          <ion-select-option value="ativo">
+            Ativo
+          </ion-select-option>
+          <ion-select-option value="pendente">
+            Pendente
+          </ion-select-option>
+          <ion-select-option value="vencido">
+            Vencido
+          </ion-select-option>
+          <ion-select-option value="suspenso">
+            Suspenso
+          </ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="empty-state">
+        <ion-icon name="people-outline"></ion-icon>
+        <h3>Nenhum associado disponível</h3>
+        <p>
+          Os cadastros aparecerão aqui quando
+          conectarmos o sistema ao Supabase.
+        </p>
+      </div>
+    </section>
+
+  </main>
+</ion-content>
