@@ -1,0 +1,50 @@
+ion-content {
+  --background: var(--iapep-background);
+}
+
+ion-toolbar {
+  --background: #FFFFFF;
+  --color: var(--iapep-blue);
+  --min-height: 60px;
+}
+
+.iapep-page {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.iapep-page-heading {
+  margin-bottom: 30px;
+
+  .eyebrow {
+    color: var(--iapep-blue);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+
+  h1 {
+    color: var(--iapep-blue);
+    font-size: 30px;
+    font-weight: 750;
+    margin: 8px 0;
+  }
+
+  p {
+    color: var(--iapep-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+@media (max-width: 650px) {
+  .iapep-page {
+    padding: 20px 16px;
+  }
+
+  .iapep-page-heading h1 {
+    font-size: 26px;
+  }
+}

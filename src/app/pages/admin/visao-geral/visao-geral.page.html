@@ -1,6 +1,6 @@
 
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="iapep-admin-toolbar">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -9,11 +9,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <main class="dashboard">
+<ion-content class="iapep-admin-content">
+  <main class="iapep-page dashboard">
 
     <!-- Cabeçalho -->
-    <section class="page-heading">
+    <section class="iapep-page-heading dashboard-heading">
       <div>
         <span class="eyebrow">PAINEL ADMINISTRATIVO</span>
         <h1>Visão geral</h1>
@@ -24,47 +24,50 @@
         </p>
       </div>
 
-      <span class="demo-badge">
+      <span class="iapep-demo-badge">
         Ambiente demonstrativo
       </span>
     </section>
 
-    <section class="indicators">
+    <!-- Indicadores -->
+    <section class="iapep-stats-grid">
       @for (item of indicadores; track item.titulo) {
-        <article class="indicator-card">
+        <article class="iapep-stat-card dashboard-indicator">
 
-          <div class="indicator-top">
-            <div class="indicator-icon">
-              <ion-icon [name]="item.icone"></ion-icon>
-            </div>
+          <div class="stat-icon">
+            <ion-icon [name]="item.icone"></ion-icon>
           </div>
 
-          <div class="indicator-value">
+          <strong>
             {{ item.valor ?? '—' }}
-          </div>
+          </strong>
 
-          <h2>{{ item.titulo }}</h2>
-
-          <span class="indicator-caption">
-            Aguardando integração
+          <span class="stat-label">
+            {{ item.titulo }}
           </span>
+
+          <small>Aguardando integração</small>
 
         </article>
       }
     </section>
 
+    <!-- Painéis -->
     <section class="dashboard-grid">
 
-      <article class="panel">
-        <div class="panel-header">
+      <article class="iapep-panel">
+        <div class="iapep-panel-header">
           <div>
             <h2>Atividades recentes</h2>
             <p>Últimas movimentações do instituto</p>
           </div>
-          <ion-icon name="time-outline"></ion-icon>
+          <ion-icon
+            name="time-outline"
+            class="panel-heading-icon">
+          </ion-icon>
         </div>
 
-        <div class="empty-state">
+        <div class="iapep-empty-state dashboard-empty-state">
           <ion-icon name="time-outline"></ion-icon>
           <h3>Nenhuma atividade registrada</h3>
           <p>
@@ -74,16 +77,19 @@
         </div>
       </article>
 
-      <article class="panel">
-        <div class="panel-header">
+      <article class="iapep-panel">
+        <div class="iapep-panel-header">
           <div>
             <h2>Propostas de admissão</h2>
             <p>Solicitações aguardando análise</p>
           </div>
-          <ion-icon name="document-text-outline"></ion-icon>
+          <ion-icon
+            name="document-text-outline"
+            class="panel-heading-icon">
+          </ion-icon>
         </div>
 
-        <div class="empty-state">
+        <div class="iapep-empty-state dashboard-empty-state">
           <ion-icon name="shield-checkmark-outline"></ion-icon>
           <h3>Dados ainda não disponíveis</h3>
           <p>
@@ -95,6 +101,7 @@
 
     </section>
 
+    <!-- Acesso rápido -->
     <section class="quick-section">
       <div class="section-heading">
         <h2>Acesso rápido</h2>
@@ -104,6 +111,7 @@
       <div class="quick-grid">
         @for (atalho of atalhos; track atalho.rota) {
           <a [routerLink]="atalho.rota" class="quick-card">
+
             <div class="quick-icon">
               <ion-icon [name]="atalho.icone"></ion-icon>
             </div>
@@ -117,11 +125,13 @@
               name="arrow-forward-outline"
               class="quick-arrow">
             </ion-icon>
+
           </a>
         }
       </div>
     </section>
 
+    <!-- Rodapé -->
     <footer class="dashboard-footer">
       IAPEP — Sistema Interativo
     </footer>

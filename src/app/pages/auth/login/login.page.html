@@ -1,0 +1,83 @@
+
+<ion-content class="login-content">
+  <main class="login-container">
+
+    <section class="login-card">
+      <div class="login-brand">
+        <div class="brand-symbol">
+          <img
+            src="assets/logos/IAPEP-para-02-2.png"
+            alt="Logotipo IAPEP"
+          />
+        </div>
+
+        <span>SISTEMA INTERATIVO</span>
+      </div>
+
+      <div class="login-heading">
+        <h1>Bem-vindo ao IAPEP</h1>
+        <p>
+          Acesse sua conta para utilizar
+          os serviços da plataforma.
+        </p>
+      </div>
+
+      <form (ngSubmit)="entrar()">
+
+        <div class="field">
+          <label for="email">E-mail</label>
+
+          <ion-input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="seuemail@exemplo.com"
+            fill="outline"
+            [(ngModel)]="email"
+            required>
+          </ion-input>
+        </div>
+
+        <div class="field">
+          <label for="senha">Senha</label>
+
+          <ion-input
+            id="senha"
+            name="senha"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Digite sua senha"
+            fill="outline"
+            [(ngModel)]="senha"
+            required>
+          </ion-input>
+        </div>
+
+        <ion-button
+          type="submit"
+          expand="block"
+          [disabled]="carregando"
+          class="login-button">
+
+          @if (carregando) {
+            <ion-spinner name="crescent"></ion-spinner>
+          } @else {
+            <ion-icon
+              name="log-in-outline"
+              slot="start">
+            </ion-icon>
+            Entrar na plataforma
+          }
+
+        </ion-button>
+      </form>
+
+      <div class="login-footer">
+        Instituto de Avaliações e Perícias
+        de Engenharia do Pará
+      </div>
+    </section>
+
+  </main>
+</ion-content>

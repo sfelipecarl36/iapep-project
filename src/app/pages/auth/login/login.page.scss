@@ -1,0 +1,127 @@
+
+ion-content.login-content {
+  --background: var(--iapep-background);
+}
+
+.login-container {
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 16px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 40px;
+  background: #FFFFFF;
+  border: 1px solid var(--iapep-border);
+  border-radius: 18px;
+}
+
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 34px;
+
+  .brand-symbol {
+    width: 88px;
+    height: 88px;
+    background: var(--iapep-blue);
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    padding: 12px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  span {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--iapep-blue);
+  }
+}
+
+.login-heading {
+  text-align: center;
+  margin-bottom: 30px;
+
+  h1 {
+    font-size: 25px;
+    font-weight: 750;
+    color: var(--iapep-blue);
+    margin: 0 0 10px;
+  }
+
+  p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--iapep-muted);
+    margin: 0;
+  }
+}
+
+.field {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--iapep-text);
+  }
+
+  ion-input {
+    --border-color: var(--iapep-border);
+    --border-radius: 9px;
+    --highlight-color-focused: var(--iapep-blue);
+    min-height: 50px;
+    font-size: 14px;
+  }
+}
+
+.login-button {
+  margin-top: 28px;
+  min-height: 50px;
+  --background: var(--iapep-blue);
+  --background-hover: #06177A;
+  --color: #FFFFFF;
+  --border-radius: 9px;
+  font-weight: 600;
+  text-transform: none;
+
+  ion-spinner {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.login-footer {
+  margin-top: 34px;
+  padding-top: 22px;
+  border-top: 1px solid var(--iapep-border);
+  text-align: center;
+  color: #98A2B3;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 22px;
+  }
+
+  .login-heading h1 {
+    font-size: 22px;
+  }
+}

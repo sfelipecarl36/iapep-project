@@ -9,28 +9,28 @@
 </ion-header>
 
 <ion-content>
-  <main class="associados-page">
+  <main class="iapep-page">
 
-    <section class="page-heading">
+    <section class="iapep-page-heading">
       <span class="eyebrow">ADMINISTRAÇÃO</span>
       <h1>Associados</h1>
       <p>Gerencie os membros e propostas de admissão do IAPEP.</p>
     </section>
 
-    <section class="stats-grid">
+    <section class="iapep-stats-grid">
       @for (item of indicadores; track item.titulo) {
-        <article class="stat-card">
+        <article class="iapep-stat-card">
           <div class="stat-icon">
             <ion-icon [name]="item.icone"></ion-icon>
           </div>
           <strong>—</strong>
-          <span>{{ item.titulo }}</span>
+          <span class="stat-label">{{ item.titulo }}</span>
           <small>Aguardando integração</small>
         </article>
       }
     </section>
 
-    <section class="members-panel">
+    <section class="iapep-panel members-panel">
       <div class="panel-heading">
         <div>
           <h2>Lista de associados</h2>
@@ -68,7 +68,7 @@
         </ion-select>
       </div>
 
-      <div class="empty-state">
+      <div class="iapep-empty-state">
         <ion-icon name="people-outline"></ion-icon>
         <h3>Nenhum associado disponível</h3>
         <p>

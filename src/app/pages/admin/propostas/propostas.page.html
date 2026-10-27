@@ -1,0 +1,61 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Propostas de Admissão</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main class="iapep-page">
+
+    <section class="iapep-page-heading">
+      <span class="eyebrow">GESTÃO ASSOCIATIVA</span>
+      <h1>Propostas de admissão</h1>
+      <p>
+        Analise as solicitações de novos associados
+        e acompanhe o processo de admissão.
+      </p>
+    </section>
+
+    <section class="iapep-stats-grid">
+      @for (item of indicadores; track item.titulo) {
+        <article class="iapep-stat-card">
+          <div class="stat-icon">
+            <ion-icon [name]="item.icone"></ion-icon>
+          </div>
+          <strong>—</strong>
+          <span class="stat-label">{{ item.titulo }}</span>
+          <small>Aguardando integração</small>
+        </article>
+      }
+    </section>
+
+    <section class="iapep-panel">
+      <div class="iapep-panel-header">
+        <div>
+          <h2>Solicitações recebidas</h2>
+          <p>
+            Propostas enviadas para avaliação
+            do IAPEP.
+          </p>
+        </div>
+        <span class="iapep-demo-badge">
+          Ambiente demonstrativo
+        </span>
+      </div>
+
+      <div class="iapep-empty-state">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <h3>Nenhuma proposta disponível</h3>
+        <p>
+          As solicitações aparecerão aqui
+          após a integração com o Supabase.
+        </p>
+      </div>
+    </section>
+
+  </main>
+</ion-content>
