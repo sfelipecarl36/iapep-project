@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 
 import { adminGuard } from './guards/admin.guard';
 import { authGuard } from './guards/auth.guard';
+import { associadoGuard } from './guards/associado.guard';
 
 export const routes: Routes = [
   {
@@ -58,8 +59,34 @@ export const routes: Routes = [
       }
     ]
   },
+
+  {
+  path: 'associado/meu-painel',
+  canActivate: [associadoGuard],
+  loadComponent: () =>
+    import('./pages/associado/meu-painel/meu-painel.page')
+      .then(m => m.MeuPainelPage)
+  },
+
+  {
+  path: 'associado/meu-cadastro',
+  canActivate: [associadoGuard],
+  loadComponent: () =>
+    import('./pages/associado/meu-cadastro/meu-cadastro.page')
+      .then(m => m.MeuCadastroPage)
+},
+
+{
+  path: 'associado/proposta',
+  canActivate: [associadoGuard],
+  loadComponent: () =>
+    import('./pages/associado/proposta/proposta.page')
+      .then(m => m.PropostaPage)
+},
+
   {
     path: '**',
     redirectTo: 'auth/login'
-  }
+  },
+  
 ];

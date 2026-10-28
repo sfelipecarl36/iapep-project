@@ -43,18 +43,22 @@ export class AuthService {
   }
 
   async getDestination(): Promise<string> {
-    const user = await this.supabase.getCurrentUser();
+  const user = await this.supabase.getCurrentUser();
 
-    if (!user) {
-      return '/auth/login';
-    }
+  if (!user) {
+    return '/auth/login';
+  }
 
-    const role = await this.getRole();
+  const role = await this.getRole();
 
-    if (role === 'admin') {
-      return '/admin/visao-geral';
-    }
+  if (role === 'admin') {
+    return '/admin/visao-geral';
+  }
 
+  if (role === 'empresa') {
     return '/auth/aguardando';
   }
+
+  return '/associado/meu-painel';
+}
 }

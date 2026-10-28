@@ -51,12 +51,12 @@ export const MENU_ADMIN: MenuItem[] = [
 export const MENU_ASSOCIADO: MenuItem[] = [
   {
     titulo: 'Meu Painel',
-    rota: '/associado/painel',
+    rota: '/associado/meu-painel',
     icone: 'home-outline'
   },
   {
     titulo: 'Meu Cadastro',
-    rota: '/associado/cadastro',
+    rota: '/associado/meu-cadastro',
     icone: 'person-outline'
   },
   {

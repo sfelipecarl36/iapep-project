@@ -1,0 +1,211 @@
+
+<ion-content>
+  <div class="iapep-page">
+
+    <div class="iapep-page-heading">
+      <div>
+        <h1>Meu Cadastro</h1>
+        <p>
+          Mantenha seus dados pessoais e profissionais
+          atualizados no Sistema Interativo IAPEP.
+        </p>
+      </div>
+    </div>
+
+    @if (carregando()) {
+      <div class="cadastro-loading">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Carregando seu cadastro...</p>
+      </div>
+    } @else {
+
+      <form
+        class="cadastro-form"
+        (ngSubmit)="salvarCadastro()">
+
+        <section class="iapep-panel">
+          <div class="iapep-panel-header">
+            <div>
+              <h2>Dados pessoais</h2>
+              <p>Informações de identificação e contato.</p>
+            </div>
+          </div>
+
+          <div class="cadastro-grid">
+
+            <div class="campo campo-largo">
+              <ion-input
+                label="Nome completo"
+                labelPlacement="stacked"
+                fill="outline"
+                name="nome_completo"
+                [(ngModel)]="dados.nome_completo"
+                required>
+              </ion-input>
+            </div>
+
+            <div class="campo">
+              <ion-input
+                label="E-mail"
+                labelPlacement="stacked"
+                fill="outline"
+                type="email"
+                name="email"
+                [(ngModel)]="dados.email"
+                required>
+              </ion-input>
+            </div>
+
+            <div class="campo">
+              <ion-input
+                label="Telefone"
+                labelPlacement="stacked"
+                fill="outline"
+                type="tel"
+                name="telefone"
+                [(ngModel)]="dados.telefone">
+              </ion-input>
+            </div>
+
+            <div class="campo">
+              <ion-input
+                label="CPF"
+                labelPlacement="stacked"
+                fill="outline"
+                name="cpf"
+                maxlength="14"
+                [(ngModel)]="dados.cpf">
+              </ion-input>
+            </div>
+
+            <div class="campo">
+              <ion-input
+                label="RG"
+                labelPlacement="stacked"
+                fill="outline"
+                name="rg"
+                [(ngModel)]="dados.rg">
+              </ion-input>
+            </div>
+
+            <div class="campo">
+              <ion-input
+                label="Data de nascimento"
+                labelPlacement="stacked"
+                fill="outline"
+                type="date"
+                name="data_nascimento"
+                [(ngModel)]="dados.data_nascimento">
+              </ion-input>
+            </div>
+
+            <div class="campo">
+              <ion-input
+                label="Naturalidade"
+                labelPlacement="stacked"
+                fill="outline"
+                name="naturalidade"
+                [(ngModel)]="dados.naturalidade">
+              </ion-input>
+            </div>
+
+            <div class="campo">
+              <ion-input
+                label="Nacionalidade"
+                labelPlacement="stacked"
+                fill="outline"
+                name="nacionalidade"
+                [(ngModel)]="dados.nacionalidade">
+              </ion-input>
+            </div>
+
+            <div class="campo campo-largo">
+              <ion-input
+                label="Filiação"
+                labelPlacement="stacked"
+                fill="outline"
+                name="filiacao"
+                [(ngModel)]="dados.filiacao">
+              </ion-input>
+            </div>
+
+          </div>
+        </section>
+
+        <section class="iapep-panel">
+          <div class="iapep-panel-header">
+            <div>
+              <h2>Dados profissionais</h2>
+              <p>
+                Informações sobre sua atuação
+                na engenharia.
+              </p>
+            </div>
+          </div>
+
+          <div class="cadastro-grid">
+
+            <div class="campo">
+              <ion-input
+                label="Número do CREA"
+                labelPlacement="stacked"
+                fill="outline"
+                name="crea_numero"
+                [(ngModel)]="dados.crea_numero">
+              </ion-input>
+            </div>
+
+            <div class="campo">
+              <ion-select
+                label="UF do CREA"
+                labelPlacement="stacked"
+                fill="outline"
+                interface="popover"
+                name="crea_uf"
+                placeholder="Selecione"
+                [(ngModel)]="dados.crea_uf">
+
+                @for (uf of estados; track uf) {
+                  <ion-select-option [value]="uf">
+                    {{ uf }}
+                  </ion-select-option>
+                }
+
+              </ion-select>
+            </div>
+
+            <div class="campo campo-largo">
+              <ion-input
+                label="Título profissional"
+                labelPlacement="stacked"
+                fill="outline"
+                name="titulo_profissional"
+                placeholder="Ex.: Engenheiro Civil"
+                [(ngModel)]="dados.titulo_profissional">
+              </ion-input>
+            </div>
+
+          </div>
+        </section>
+
+        <div class="cadastro-acoes">
+          <ion-button
+            type="submit"
+            [disabled]="salvando()">
+
+            @if (salvando()) {
+              <ion-spinner
+                name="crescent">
+              </ion-spinner>
+            } @else {
+              Salvar alterações
+            }
+
+          </ion-button>
+        </div>
+
+      </form>
+    }
+
+  </div>
+</ion-content>

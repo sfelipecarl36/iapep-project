@@ -1,0 +1,321 @@
+
+:host {
+  display: block;
+}
+
+.indicadores {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.indicador {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  ion-icon {
+    font-size: 25px;
+    color: #010c59;
+  }
+
+  span {
+    color: #64748b;
+    font-size: 13px;
+  }
+
+  strong {
+    color: #010c59;
+    font-size: 28px;
+  }
+}
+
+.painel-cabecalho {
+  margin-bottom: 18px;
+
+  h2 {
+    color: #010c59;
+    margin: 0 0 6px;
+    font-size: 19px;
+  }
+
+  p {
+    color: #64748b;
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+
+  button {
+    border: 1px solid #dce3ed;
+    border-radius: 8px;
+    padding: 9px 16px;
+    background: #fff;
+    color: #475569;
+    cursor: pointer;
+    font-weight: 600;
+
+    &.ativo {
+      background: #010c59;
+      color: #fff;
+      border-color: #010c59;
+    }
+  }
+}
+
+.tabela-container {
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 760px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 15px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 13px;
+  }
+
+  th {
+    color: #64748b;
+    font-weight: 600;
+  }
+
+  td {
+    color: #334155;
+  }
+
+  .nome {
+    font-weight: 700;
+    color: #010c59;
+  }
+}
+
+.status {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  &.pendente {
+    background: #fff3d6;
+    color: #926000;
+  }
+
+  &.aprovada {
+    background: #e5f6ed;
+    color: #176b42;
+  }
+
+  &.rejeitada {
+    background: #fde8e8;
+    color: #a52a2a;
+  }
+}
+
+.estado-pagina {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  color: #64748b;
+
+  ion-spinner {
+    color: #010c59;
+  }
+
+  ion-icon {
+    font-size: 36px;
+  }
+}
+
+.modal-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(1, 12, 89, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-conteudo {
+  width: 100%;
+  max-width: 760px;
+  max-height: 85vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.modal-cabecalho {
+  padding: 22px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  h2 {
+    color: #010c59;
+    margin: 0 0 6px;
+  }
+
+  p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+  }
+}
+
+.modal-corpo {
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.detalhes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  span {
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  strong {
+    font-size: 14px;
+    color: #010c59;
+    overflow-wrap: anywhere;
+  }
+}
+
+.observacao {
+  margin-top: 24px;
+  padding: 18px;
+  background: #f8fafc;
+  border-radius: 10px;
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: 15px;
+    color: #010c59;
+  }
+
+  p {
+    margin: 0;
+    color: #475569;
+  }
+}
+
+@media (max-width: 992px) {
+  .indicadores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .indicadores,
+  .detalhes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-fundo {
+    padding: 10px;
+  }
+
+  .modal-cabecalho,
+  .modal-corpo {
+    padding: 16px;
+  }
+}
+
+
+
+.analise-area {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.analise-botoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+
+  ion-button {
+    text-transform: none;
+    font-weight: 600;
+    --border-radius: 9px;
+  }
+}
+
+.analise-confirmacao {
+  h3 {
+    margin: 0 0 8px;
+    color: #010c59;
+    font-size: 17px;
+  }
+
+  p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px;
+    margin: 12px 0 18px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    resize: vertical;
+    font: inherit;
+    color: #334155;
+    outline: none;
+
+    &:focus {
+      border-color: #010c59;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .analise-botoes {
+    flex-direction: column;
+
+    ion-button {
+      width: 100%;
+      margin: 0;
+    }
+  }
+}

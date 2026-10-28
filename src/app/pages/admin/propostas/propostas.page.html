@@ -4,58 +4,404 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+
     <ion-title>Propostas de Admissão</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <main class="iapep-page">
+  <div class="iapep-page">
 
-    <section class="iapep-page-heading">
-      <span class="eyebrow">GESTÃO ASSOCIATIVA</span>
-      <h1>Propostas de admissão</h1>
-      <p>
-        Analise as solicitações de novos associados
-        e acompanhe o processo de admissão.
-      </p>
-    </section>
-
-    <section class="iapep-stats-grid">
-      @for (item of indicadores; track item.titulo) {
-        <article class="iapep-stat-card">
-          <div class="stat-icon">
-            <ion-icon [name]="item.icone"></ion-icon>
-          </div>
-          <strong>—</strong>
-          <span class="stat-label">{{ item.titulo }}</span>
-          <small>Aguardando integração</small>
-        </article>
-      }
-    </section>
-
-    <section class="iapep-panel">
-      <div class="iapep-panel-header">
-        <div>
-          <h2>Solicitações recebidas</h2>
-          <p>
-            Propostas enviadas para avaliação
-            do IAPEP.
-          </p>
-        </div>
-        <span class="iapep-demo-badge">
-          Ambiente demonstrativo
-        </span>
-      </div>
-
-      <div class="iapep-empty-state">
-        <ion-icon name="document-text-outline"></ion-icon>
-        <h3>Nenhuma proposta disponível</h3>
+    <div class="iapep-page-heading">
+      <div>
+        <h1>Propostas de Admissão</h1>
         <p>
-          As solicitações aparecerão aqui
-          após a integração com o Supabase.
+          Consulte e acompanhe as solicitações
+          recebidas pelo IAPEP.
         </p>
       </div>
+
+      <ion-button
+        fill="outline"
+        (click)="carregarPropostas()"
+        [disabled]="carregando()">
+        <ion-icon name="refresh-outline" slot="start"></ion-icon>
+        Atualizar
+      </ion-button>
+    </div>
+
+    <div class="indicadores">
+
+      <div class="indicador">
+        <ion-icon name="time-outline"></ion-icon>
+        <span>Pendentes de análise</span>
+        <strong>{{ totalPendentes() }}</strong>
+      </div>
+
+      <div class="indicador">
+        <ion-icon name="wallet-outline"></ion-icon>
+        <span>Aguardando pagamento</span>
+        <strong>—</strong>
+      </div>
+
+      <div class="indicador">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <span>Aprovadas</span>
+        <strong>{{ totalAprovadas() }}</strong>
+      </div>
+
+      <div class="indicador">
+        <ion-icon name="close-circle-outline"></ion-icon>
+        <span>Rejeitadas</span>
+        <strong>{{ totalRejeitadas() }}</strong>
+      </div>
+
+    </div>
+
+    <section class="iapep-panel">
+
+      <div class="painel-cabecalho">
+        <div>
+          <h2>Solicitações recebidas</h2>
+          <p>Selecione uma proposta para visualizar os dados.</p>
+        </div>
+      </div>
+
+      <div class="filtros">
+        <button
+          type="button"
+          [class.ativo]="filtro() === 'todas'"
+          (click)="alterarFiltro('todas')">
+          Todas
+        </button>
+
+        <button
+          type="button"
+          [class.ativo]="filtro() === 'pendente'"
+          (click)="alterarFiltro('pendente')">
+          Pendentes
+        </button>
+
+        <button
+          type="button"
+          [class.ativo]="filtro() === 'aprovada'"
+          (click)="alterarFiltro('aprovada')">
+          Aprovadas
+        </button>
+
+        <button
+          type="button"
+          [class.ativo]="filtro() === 'rejeitada'"
+          (click)="alterarFiltro('rejeitada')">
+          Rejeitadas
+        </button>
+      </div>
+
+      @if (carregando()) {
+
+        <div class="estado-pagina">
+          <ion-spinner name="crescent"></ion-spinner>
+          <p>Carregando propostas...</p>
+        </div>
+
+      } @else if (erro()) {
+
+        <div class="estado-pagina">
+          <p>{{ erro() }}</p>
+          <ion-button (click)="carregarPropostas()">
+            Tentar novamente
+          </ion-button>
+        </div>
+
+      } @else if (propostasFiltradas().length === 0) {
+
+        <div class="estado-pagina">
+          <ion-icon name="document-text-outline"></ion-icon>
+          <p>Nenhuma proposta encontrada.</p>
+        </div>
+
+      } @else {
+
+        <div class="tabela-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Candidato</th>
+                <th>CPF</th>
+                <th>CREA</th>
+                <th>Envio</th>
+                <th>Situação</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (proposta of propostasFiltradas(); track proposta.id) {
+                <tr>
+                  <td class="nome">
+                    {{ obterCampo(proposta, 'nome_completo') }}
+                  </td>
+
+                  <td>
+                    {{ obterCampo(proposta, 'cpf') }}
+                  </td>
+
+                  <td>
+                    {{ obterCampo(proposta, 'crea_numero') }}
+                    /
+                    {{ obterCampo(proposta, 'crea_uf') }}
+                  </td>
+
+                  <td>
+                    {{ proposta.enviada_em | date:'dd/MM/yyyy' }}
+                  </td>
+
+                  <td>
+                    <span
+                      class="status"
+                      [class.pendente]="proposta.status === 'pendente'"
+                      [class.aprovada]="proposta.status === 'aprovada'"
+                      [class.rejeitada]="proposta.status === 'rejeitada'">
+
+                      {{ proposta.status === 'pendente'
+                        ? 'Em análise'
+                        : proposta.status === 'aprovada'
+                          ? 'Aprovada'
+                          : 'Rejeitada' }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <ion-button
+                      fill="clear"
+                      size="small"
+                      (click)="visualizarProposta(proposta)">
+                      <ion-icon
+                        name="eye-outline"
+                        slot="start">
+                      </ion-icon>
+                      Visualizar
+                    </ion-button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+      }
+
     </section>
 
-  </main>
+    @if (propostaSelecionada(); as selecionada) {
+
+      <div class="modal-fundo" (click)="fecharDetalhes()">
+        <section
+          class="modal-conteudo"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Detalhes da proposta"
+          (click)="$event.stopPropagation()">
+
+          <div class="modal-cabecalho">
+            <div>
+              <h2>Detalhes da proposta</h2>
+              <p>
+                Enviada em
+                {{ selecionada.enviada_em | date:'dd/MM/yyyy HH:mm' }}
+              </p>
+            </div>
+
+            <ion-button
+              fill="clear"
+              (click)="fecharDetalhes()"
+              aria-label="Fechar detalhes">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </div>
+
+          <div class="modal-corpo">
+
+            <div class="detalhes-grid">
+              <div>
+                <span>Nome completo</span>
+                <strong>
+                  {{ obterCampo(selecionada, 'nome_completo') }}
+                </strong>
+              </div>
+
+              <div>
+                <span>E-mail</span>
+                <strong>
+                  {{ obterCampo(selecionada, 'email') }}
+                </strong>
+              </div>
+
+              <div>
+                <span>Telefone</span>
+                <strong>
+                  {{ obterCampo(selecionada, 'telefone') }}
+                </strong>
+              </div>
+
+              <div>
+                <span>CPF</span>
+                <strong>
+                  {{ obterCampo(selecionada, 'cpf') }}
+                </strong>
+              </div>
+
+              <div>
+                <span>RG</span>
+                <strong>
+                  {{ obterCampo(selecionada, 'rg') }}
+                </strong>
+              </div>
+
+              <div>
+                <span>Data de nascimento</span>
+                <strong>
+                  {{ obterCampo(selecionada, 'data_nascimento') }}
+                </strong>
+              </div>
+
+              <div>
+                <span>Naturalidade</span>
+                <strong>
+                  {{ obterCampo(selecionada, 'naturalidade') }}
+                </strong>
+              </div>
+
+              <div>
+                <span>Nacionalidade</span>
+                <strong>
+                  {{ obterCampo(selecionada, 'nacionalidade') }}
+                </strong>
+              </div>
+
+              <div>
+                <span>Filiação</span>
+                <strong>
+                  {{ obterCampo(selecionada, 'filiacao') }}
+                </strong>
+              </div>
+
+              <div>
+                <span>CREA</span>
+                <strong>
+                  {{ obterCampo(selecionada, 'crea_numero') }}
+                </strong>
+              </div>
+
+              <div>
+                <span>UF do CREA</span>
+                <strong>
+                  {{ obterCampo(selecionada, 'crea_uf') }}
+                </strong>
+              </div>
+
+              <div>
+                <span>Título profissional</span>
+                <strong>
+                  {{ obterCampo(selecionada, 'titulo_profissional') }}
+                </strong>
+              </div>
+            </div>
+
+            @if (selecionada.observacao_admin) {
+              <div class="observacao">
+                <h3>Observação administrativa</h3>
+                <p>{{ selecionada.observacao_admin }}</p>
+              </div>
+            }
+
+            
+@if (selecionada.status === 'pendente') {
+
+  <div class="analise-area">
+
+    @if (!decisaoSelecionada()) {
+
+      <div class="analise-botoes">
+        <ion-button
+          color="success"
+          (click)="iniciarAnalise('aprovada')">
+          Aprovar proposta
+        </ion-button>
+
+        <ion-button
+          color="danger"
+          fill="outline"
+          (click)="iniciarAnalise('rejeitada')">
+          Rejeitar proposta
+        </ion-button>
+      </div>
+
+    } @else {
+
+      <div class="analise-confirmacao">
+
+        <h3>
+          {{ decisaoSelecionada() === 'aprovada'
+            ? 'Confirmar aprovação'
+            : 'Confirmar rejeição' }}
+        </h3>
+
+        <p>
+          {{ decisaoSelecionada() === 'aprovada'
+            ? 'A proposta será aprovada, mas a associação ainda não será ativada.'
+            : 'Informe o motivo da rejeição para o candidato.' }}
+        </p>
+
+        <textarea
+          #campoObservacao
+          [value]="observacaoAnalise()"
+          (input)="observacaoAnalise.set(campoObservacao.value)"
+          [placeholder]="decisaoSelecionada() === 'rejeitada'
+            ? 'Motivo da rejeição (obrigatório)'
+            : 'Observação administrativa (opcional)'"
+          rows="4">
+        </textarea>
+
+        <div class="analise-botoes">
+
+          <ion-button
+            fill="outline"
+            [disabled]="analisando()"
+            (click)="cancelarAnalise()">
+            Cancelar
+          </ion-button>
+
+          <ion-button
+            [color]="decisaoSelecionada() === 'aprovada'
+              ? 'success'
+              : 'danger'"
+            [disabled]="analisando()"
+            (click)="confirmarAnalise()">
+
+            @if (analisando()) {
+              <ion-spinner name="crescent"></ion-spinner>
+            } @else {
+              Confirmar decisão
+            }
+
+          </ion-button>
+
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+}
+
+
+          </div>
+        </section>
+      </div>
+
+    }
+  </div>
 </ion-content>

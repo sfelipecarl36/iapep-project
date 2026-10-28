@@ -1,4 +1,3 @@
-
 import { Component, OnInit, OnDestroy, NgZone, signal } from '@angular/core';
 import {
   Router,
@@ -212,16 +211,27 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     this.zone.run(() => {
+      
       this.perfil = perfil;
-
       const rota = this.router.url;
 
-      const autorizado =
+      const menuAdmin =
         perfil === 'admin' &&
         rota.startsWith('/admin');
 
-      this.appPages = autorizado ? MENU_ADMIN : [];
-      this.menuDisponivel.set(autorizado);
+      const menuAssociado =
+        perfil !== 'empresa' &&
+        rota.startsWith('/associado');
+
+      if (menuAdmin) {
+        this.appPages = MENU_ADMIN;
+      } else if (menuAssociado) {
+        this.appPages = MENU_ASSOCIADO;
+      } else {
+        this.appPages = [];
+      }
+
+      this.menuDisponivel.set(menuAdmin || menuAssociado);
     });
 
   } catch (error) {

@@ -1,0 +1,215 @@
+
+<ion-content>
+  <div class="iapep-page">
+
+    <div class="iapep-page-heading">
+      <div>
+        <h1>Proposta de Admissão</h1>
+        <p>
+          Solicite sua associação ao Instituto de
+          Avaliações e Perícias de Engenharia do Pará.
+        </p>
+      </div>
+    </div>
+
+    @if (carregando()) {
+
+      <div class="proposta-loading">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Carregando informações...</p>
+      </div>
+
+    } @else if (erro()) {
+
+      <section class="iapep-panel">
+        <h2>Não foi possível carregar</h2>
+        <p>{{ erro() }}</p>
+
+        <ion-button (click)="carregarDados()">
+          Tentar novamente
+        </ion-button>
+      </section>
+
+    } @else if (proposta(); as atual) {
+
+      <section class="iapep-panel">
+
+        <div class="iapep-panel-header">
+          <div>
+            <h2>Situação da proposta</h2>
+            <p>
+              Acompanhe a análise da sua solicitação.
+            </p>
+          </div>
+        </div>
+
+        <div class="proposta-status"
+          [class.pendente]="atual.status === 'pendente'"
+          [class.aprovada]="atual.status === 'aprovada'"
+          [class.rejeitada]="atual.status === 'rejeitada'">
+
+          @if (atual.status === 'pendente') {
+            Em análise
+          } @else if (atual.status === 'aprovada') {
+            Proposta aprovada
+          } @else {
+            Proposta rejeitada
+          }
+
+        </div>
+
+        <div class="proposta-detalhes">
+
+          <div>
+            <span>Data de envio</span>
+            <strong>
+              {{ atual.enviada_em | date:'dd/MM/yyyy HH:mm' }}
+            </strong>
+          </div>
+
+          <div>
+            <span>Situação atual</span>
+            <strong>
+              {{ atual.status === 'pendente'
+                ? 'Aguardando análise'
+                : atual.status === 'aprovada'
+                  ? 'Aprovada'
+                  : 'Rejeitada' }}
+            </strong>
+          </div>
+
+        </div>
+
+        @if (atual.observacao_admin) {
+          <div class="proposta-observacao">
+            <h3>Observação da administração</h3>
+            <p>{{ atual.observacao_admin }}</p>
+          </div>
+        }
+
+        @if (atual.status === 'pendente') {
+          <p class="proposta-mensagem">
+            Sua proposta foi recebida e está aguardando
+            análise da administração do IAPEP.
+          </p>
+        }
+
+        @if (atual.status === 'aprovada') {
+          <p class="proposta-mensagem">
+            Sua proposta foi aprovada. A ativação da
+            associação dependerá das próximas etapas,
+            incluindo o pagamento quando aplicável.
+          </p>
+        }
+
+        @if (atual.status === 'rejeitada') {
+          <p class="proposta-mensagem">
+            Sua proposta foi analisada e não aprovada.
+            Confira as observações da administração.
+          </p>
+
+          <ion-button
+            [disabled]="enviando()"
+            (click)="enviarProposta()">
+
+            @if (enviando()) {
+              <ion-spinner name="crescent"></ion-spinner>
+            } @else {
+              Enviar nova proposta
+            }
+
+          </ion-button>
+        }
+
+      </section>
+
+    } @else {
+
+      <section class="iapep-panel">
+
+        <div class="iapep-panel-header">
+          <div>
+            <h2>Solicitar admissão</h2>
+            <p>
+              Confira seus dados antes de enviar
+              a proposta para análise.
+            </p>
+          </div>
+        </div>
+
+        @if (perfil(); as dados) {
+
+          <div class="proposta-detalhes">
+
+            <div>
+              <span>Nome completo</span>
+              <strong>{{ dados.nome_completo || 'Não informado' }}</strong>
+            </div>
+
+            <div>
+              <span>CPF</span>
+              <strong>{{ dados.cpf || 'Não informado' }}</strong>
+            </div>
+
+            <div>
+              <span>CREA</span>
+              <strong>{{ dados.crea_numero || 'Não informado' }}</strong>
+            </div>
+
+            <div>
+              <span>UF do CREA</span>
+              <strong>{{ dados.crea_uf || 'Não informado' }}</strong>
+            </div>
+
+            <div>
+              <span>Título profissional</span>
+              <strong>
+                {{ dados.titulo_profissional || 'Não informado' }}
+              </strong>
+            </div>
+
+          </div>
+
+        } @else {
+
+          <p>
+            Você ainda não preencheu seu cadastro.
+          </p>
+
+        }
+
+        @if (!cadastroCompleto) {
+          <div class="proposta-alerta">
+            Complete seu cadastro antes de enviar
+            a proposta de admissão.
+          </div>
+        }
+
+        <div class="proposta-acoes">
+
+          <ion-button
+            fill="outline"
+            routerLink="/associado/meu-cadastro">
+            Meu Cadastro
+          </ion-button>
+
+          <ion-button
+            [disabled]="!cadastroCompleto || enviando()"
+            (click)="enviarProposta()">
+
+            @if (enviando()) {
+              <ion-spinner name="crescent"></ion-spinner>
+            } @else {
+              Enviar proposta
+            }
+
+          </ion-button>
+
+        </div>
+
+      </section>
+
+    }
+
+  </div>
+</ion-content>

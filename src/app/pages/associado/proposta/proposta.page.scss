@@ -1,0 +1,143 @@
+
+:host {
+  display: block;
+}
+
+.proposta-loading {
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #64748b;
+
+  ion-spinner {
+    color: #010c59;
+  }
+}
+
+.proposta-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 18px 0;
+
+  &.pendente {
+    background: #fff3d6;
+    color: #926000;
+  }
+
+  &.aprovada {
+    background: #e5f6ed;
+    color: #176b42;
+  }
+
+  &.rejeitada {
+    background: #fde8e8;
+    color: #a52a2a;
+  }
+}
+
+.proposta-detalhes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  padding: 22px 0;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  span {
+    color: #64748b;
+    font-size: 13px;
+  }
+
+  strong {
+    color: #010c59;
+    font-size: 15px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+}
+
+.proposta-mensagem {
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-top: 16px;
+}
+
+.proposta-observacao {
+  padding: 18px;
+  border: 1px solid #dce3ed;
+  border-radius: 10px;
+  background: #f8fafc;
+
+  h3 {
+    color: #010c59;
+    font-size: 15px;
+    margin: 0 0 8px;
+  }
+
+  p {
+    margin: 0;
+    color: #475569;
+    line-height: 1.6;
+  }
+}
+
+.proposta-alerta {
+  padding: 14px 18px;
+  background: #fff7e6;
+  border: 1px solid #f4d89a;
+  border-radius: 10px;
+  color: #875b00;
+  font-size: 14px;
+}
+
+.proposta-acoes {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+
+  ion-button {
+    --border-radius: 10px;
+    --background: #010c59;
+    --color: #ffffff;
+    text-transform: none;
+    font-weight: 600;
+    min-height: 44px;
+  }
+
+  ion-button[fill="outline"] {
+    --background: transparent;
+    --color: #010c59;
+    --border-color: #010c59;
+  }
+}
+
+@media (max-width: 768px) {
+  .proposta-detalhes {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .proposta-acoes {
+    flex-direction: column;
+
+    ion-button {
+      width: 100%;
+      margin: 0;
+    }
+  }
+}
